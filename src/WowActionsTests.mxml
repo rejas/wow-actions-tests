@@ -7,14 +7,16 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import test.wowactions.characters.CharacterServiceTest;
-			import test.wowactions.characters.CharacterTest; 
+			import test.wowactions.CharacterServiceTest;
+			import test.wowactions.GuildServiceTest;
+			import test.wowactions.RealmServiceTest;
 			
 			public function currentRunTestSuite():Array 
 			{ 
 				var testsToRun:Array = new Array(); 
 				testsToRun.push(CharacterServiceTest); 
-				//testsToRun.push(CharacterTest); 
+				testsToRun.push(GuildServiceTest); 
+				testsToRun.push(RealmServiceTest); 
 				return testsToRun; 
 			}
 			

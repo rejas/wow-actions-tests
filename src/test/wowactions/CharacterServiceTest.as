@@ -1,4 +1,4 @@
-package test.wowactions.characters
+package test.wowactions
 {
 	import com.wowactions.characters.Character;
 	import com.wowactions.characters.CharacterService;
@@ -21,7 +21,7 @@ package test.wowactions.characters
 		public function setUp():void
 		{
 			charService = new CharacterService(Region.EUROPE, "khazgoroth");
-			charService.getCharacterData('ghorinchai');
+			charService.getCharacterData("ghorinchai");
 			
 			charService.addEventListener(WowActionsEvent.CHARACTER_INFO_RETRIEVED, onInfoRetrieved);
 			charService.addEventListener(WowActionsEvent.DATA_ERROR, onErrorRetrieved);
