@@ -29,28 +29,8 @@ package test.wowactions
 			Async.proceedOnEvent(this, charService, WowActionsEvent.CHARACTER_INFO_RETRIEVED, 1000);
 		}
 		
-		private function onInfoRetrieved(ev:WowActionsEvent):void
-		{
-			char = ev.data;
-		}
-		
-		private function onErrorRetrieved(ev:WowActionsEvent):void
-		{
-			trace(ev.type);
-		}
-		
-		[After]
-		public function tearDown():void
-		{
-		}
-		
 		[BeforeClass]
 		public static function setUpBeforeClass():void
-		{
-		}
-		
-		[AfterClass]
-		public static function tearDownAfterClass():void
 		{
 		}
 		
@@ -64,6 +44,30 @@ package test.wowactions
 		public function testGetCharacterData():void
 		{			
 			Assert.assertNotNull(char, "Character is Null");
+		}
+		
+		[After]
+		public function tearDown():void
+		{
+		}
+		
+		[AfterClass]
+		public static function tearDownAfterClass():void
+		{
+		}
+		
+		//
+		// PRIVATE METHODS
+		//
+		
+		private function onInfoRetrieved(ev:WowActionsEvent):void
+		{
+			char = ev.data;
+		}
+		
+		private function onErrorRetrieved(ev:WowActionsEvent):void
+		{
+			trace(ev.type);
 		}
 	}
 }

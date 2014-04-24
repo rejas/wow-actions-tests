@@ -8,15 +8,15 @@
 	<fx:Script>
 		<![CDATA[
 			import test.wowactions.CharacterServiceTest;
-			import test.wowactions.GuildServiceTest;
-			import test.wowactions.RealmServiceTest;
+			import test.wowactions.characters.CharacterTest;
 			
 			public function currentRunTestSuite():Array 
 			{ 
 				var testsToRun:Array = new Array(); 
 				testsToRun.push(CharacterServiceTest); 
-				testsToRun.push(GuildServiceTest); 
-				testsToRun.push(RealmServiceTest); 
+				testsToRun.push(CharacterTest); 
+				//testsToRun.push(GuildServiceTest); 
+				//testsToRun.push(RealmServiceTest); 
 				return testsToRun; 
 			}
 			
