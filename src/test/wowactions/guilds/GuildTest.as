@@ -1,9 +1,11 @@
 package test.wowactions.guilds
 {
+	import com.wowactions.characters.CharacterClassData;
 	import com.wowactions.data.Region;
 	import com.wowactions.events.WowActionsEvent;
 	import com.wowactions.guilds.Guild;
 	import com.wowactions.guilds.GuildService;
+	import com.wowactions.races.RaceData;
 	
 	import flexunit.framework.Assert;
 	
@@ -17,8 +19,8 @@ package test.wowactions.guilds
 		[BeforeClass (async)]
 		public static function setUpBeforeClass():void
 		{
-			guildService = new GuildService(Region.EUROPE, "Khaz'goroth");
-			guildService.getGuildInfo("Mokrah Toktok", GuildService.ACHIEVEMENTS, GuildService.MEMBERS, GuildService.NEWS, GuildService.CHALLENGE);
+			guildService = new GuildService(Region.EUROPE, "Razuvious");
+			guildService.getGuildInfo("КрашТест", GuildService.ACHIEVEMENTS, GuildService.MEMBERS, GuildService.NEWS, GuildService.CHALLENGE);
 			
 			guildService.addEventListener(WowActionsEvent.GUILD_INFO_RETRIEVED, onInfoRetrieved);
 			guildService.addEventListener(WowActionsEvent.DATA_ERROR, onErrorRetrieved);
@@ -47,37 +49,37 @@ package test.wowactions.guilds
 		[Test]
 		public function testGet_achievementPoints():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertEquals(guild.achievementPoints, 2630);
 		}
 		
 		[Test]
 		public function testGet_achievements():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertTrue(guild.achievements.length > 0);
 		}
 		
 		[Test]
 		public function testGet_battleGroup():void
 		{
-			Assert.assertEquals(guild.battleGroup, "Reckoning / Abrechnung");
+			Assert.assertEquals(guild.battleGroup, "Sturmangriff / Charge");
 		}
 		
 		[Test]
 		public function testGet_faction():void
 		{
-			Assert.assertEquals(guild.faction, "Horde");
+			Assert.assertEquals(guild.faction, RaceData.FACTION_ALLIANCE);
 		}
 		
 		[Test]
 		public function testGetCompletedAchievements():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertEquals(guild.getCompletedAchievements().length, 259);
 		}
 		
 		[Test]
 		public function testGetIncompleteAchievements():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertEquals(guild.getIncompleteAchievements().length, 0);
 		}
 		
 		[Test]
@@ -89,43 +91,43 @@ package test.wowactions.guilds
 		[Test]
 		public function testGetMembersAboveLevel():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertEquals(guild.getMembersAboveLevel(100, false).length, 0);
+			Assert.assertTrue(guild.getMembersAboveLevel(0, false).length > 0);
 		}
 		
 		[Test]
 		public function testGetMembersAtLevel():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertEquals(guild.getMembersAtLevel(0).length, 0);
+			Assert.assertEquals(guild.getMembersAtLevel(100).length, 0);
+			Assert.assertTrue(guild.getMembersAtLevel(90).length > 0);
 		}
 		
 		[Test]
 		public function testGetMembersBelowLevel():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertEquals(guild.getMembersBelowLevel(0, false).length, 0);
+			Assert.assertTrue(guild.getMembersBelowLevel(100, false).length > 0);
 		}
 		
 		[Test]
 		public function testGetMembersBetweenLevels():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertEquals(guild.getMembersBetweenLevels(0, 0).length, 0);
+			Assert.assertTrue(guild.getMembersBetweenLevels(0, 100).length > 0);
 		}
 		
 		[Test]
 		public function testGetMembersByCharacterClass():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertTrue(guild.getMembersByCharacterClass(CharacterClassData.MONK).length > 0);
 		}
 		
 		[Test]
 		public function testGetMembersByRace():void
 		{
-			Assert.fail("Test method Not yet implemented");
-		}
-		
-		[Test]
-		public function testGuild():void
-		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertTrue(guild.getMembersByRace(RaceData.PANDAREN).length > 0);
+			Assert.assertEquals(guild.getMembersByRace(RaceData.ORC).length, 0);
 		}
 		
 		[Test]
@@ -143,7 +145,7 @@ package test.wowactions.guilds
 		[Test]
 		public function testGet_name():void
 		{
-			Assert.assertEquals(guild.name, "Mokrah Toktok");
+			Assert.assertEquals(guild.name, "КрашТест");
 		}
 		
 		[Test]
@@ -155,13 +157,13 @@ package test.wowactions.guilds
 		[Test]
 		public function testGet_realm():void
 		{
-			Assert.assertEquals(guild.realm, "Khaz'goroth");
+			Assert.assertEquals(guild.realm, "Razuvious");
 		}
 		
 		[Test]
 		public function testToString():void
 		{
-			Assert.fail("Test method Not yet implemented");
+			Assert.assertNotNull(guild.toString());
 		}
 		
 		//
