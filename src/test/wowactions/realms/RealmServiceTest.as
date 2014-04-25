@@ -1,4 +1,4 @@
-package test.wowactions
+package test.wowactions.realms
 {
 	import com.wowactions.data.Region;
 	import com.wowactions.events.WowActionsEvent;
@@ -11,12 +11,11 @@ package test.wowactions
 	
 	public class RealmServiceTest
 	{
-		private var realmService:RealmService;
-		private var realm:Realm;
-		private var errorType:String;
+		private static var realmService:RealmService;
+		private static var realm:Realm;
 		
-		[Before( async )]
-		public function setUp():void
+		[BeforeClass (async)]
+		public static function setUpBeforeClass():void
 		{
 			realmService = new RealmService(Region.EUROPE);
 			realmService.getRealms(["khazgoroth"]);
@@ -24,17 +23,12 @@ package test.wowactions
 			realmService.addEventListener(WowActionsEvent.REALMS_RETRIEVED, onInfoRetrieved);
 			realmService.addEventListener(WowActionsEvent.DATA_ERROR, onErrorRetrieved);
 			
-			Async.proceedOnEvent(this, realmService, WowActionsEvent.REALMS_RETRIEVED, 1000);
+			Async.proceedOnEvent(RealmServiceTest, realmService, WowActionsEvent.REALMS_RETRIEVED, 1000);
 		}
 		
-		private function onInfoRetrieved(ev:WowActionsEvent):void
+		[Before]
+		public function setUp():void
 		{
-			realm = ev.data[0];
-		}
-		
-		private function onErrorRetrieved(ev:WowActionsEvent):void
-		{
-			trace(ev.type);
 		}
 		
 		[After]
@@ -42,15 +36,14 @@ package test.wowactions
 		{
 		}
 		
-		[BeforeClass]
-		public static function setUpBeforeClass():void
-		{
-		}
-		
 		[AfterClass]
 		public static function tearDownAfterClass():void
 		{
 		}
+		
+		//
+		// TEST METHODS
+		//
 		
 		[Test]
 		public function testRealmService():void
@@ -62,6 +55,20 @@ package test.wowactions
 		public function testGetRealmData():void
 		{			
 			Assert.assertNotNull(realm, "Realm is Null");
+		}
+		
+		//
+		// PRIVATE METHODS
+		//
+		
+		private static function onInfoRetrieved(ev:WowActionsEvent):void
+		{
+			realm = ev.data[0];
+		}
+		
+		private static function onErrorRetrieved(ev:WowActionsEvent):void
+		{
+			Assert.fail("Error retrieved getting realm info: " + ev.type);
 		}
 	}
 }

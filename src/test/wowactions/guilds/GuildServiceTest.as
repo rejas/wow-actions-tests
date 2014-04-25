@@ -1,4 +1,4 @@
-package test.wowactions
+package test.wowactions.guilds
 {
 	import com.wowactions.data.Region;
 	import com.wowactions.events.WowActionsEvent;
@@ -11,12 +11,11 @@ package test.wowactions
 	
 	public class GuildServiceTest
 	{
-		private var guildService:GuildService;
-		private var guild:Guild;
-		private var errorType:String;
+		private static var guildService:GuildService;
+		private static var guild:Guild;
 		
-		[Before( async )]
-		public function setUp():void
+		[BeforeClass (async)]
+		public static function setUpBeforeClass():void
 		{
 			guildService = new GuildService(Region.EUROPE, "khazgoroth");
 			guildService.getGuildInfo("Mokrah Toktok");
@@ -24,17 +23,12 @@ package test.wowactions
 			guildService.addEventListener(WowActionsEvent.GUILD_INFO_RETRIEVED, onInfoRetrieved);
 			guildService.addEventListener(WowActionsEvent.DATA_ERROR, onErrorRetrieved);
 			
-			Async.proceedOnEvent(this, guildService, WowActionsEvent.GUILD_INFO_RETRIEVED, 1000);
+			Async.proceedOnEvent(GuildServiceTest, guildService, WowActionsEvent.GUILD_INFO_RETRIEVED, 1000);
 		}
 		
-		private function onInfoRetrieved(ev:WowActionsEvent):void
+		[Before]
+		public function setUp():void
 		{
-			guild = ev.data;
-		}
-		
-		private function onErrorRetrieved(ev:WowActionsEvent):void
-		{
-			trace(ev.type);
 		}
 		
 		[After]
@@ -42,15 +36,14 @@ package test.wowactions
 		{
 		}
 		
-		[BeforeClass]
-		public static function setUpBeforeClass():void
-		{
-		}
-		
 		[AfterClass]
 		public static function tearDownAfterClass():void
 		{
 		}
+		
+		//
+		// TEST METHODS
+		//
 		
 		[Test]
 		public function testGuildService():void
@@ -62,6 +55,20 @@ package test.wowactions
 		public function testGetGuildData():void
 		{			
 			Assert.assertNotNull(guild, "Guild is Null");
+		}
+		
+		//
+		// PRIVATE METHODS
+		//
+		
+		private static function onInfoRetrieved(ev:WowActionsEvent):void
+		{
+			guild = ev.data;
+		}
+		
+		private static function onErrorRetrieved(ev:WowActionsEvent):void
+		{
+			Assert.fail("Error retrieved getting guild info: " + ev.type);
 		}
 	}
 }
