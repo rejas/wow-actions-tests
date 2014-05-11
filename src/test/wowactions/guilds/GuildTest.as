@@ -71,15 +71,15 @@ package test.wowactions.guilds
 		}
 		
 		[Test]
-		public function testGetCompletedAchievements():void
+		public function testGetAchievements():void
 		{
-			Assert.assertTrue(guild.getCompletedAchievements().length > 200);
+			Assert.assertTrue(guild.achievements.length > 200);
 		}
 		
 		[Test]
 		public function testGetIncompleteAchievements():void
 		{
-			Assert.fail("Method To Test Not yet implemented");
+			Assert.assertTrue(guild.criterias.length > 0);
 		}
 		
 		[Test]
